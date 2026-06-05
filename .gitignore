@@ -5,3 +5,6 @@ node_modules/
 dist/
 local-preview.png
 mobile-preview.png
+production-preview.png
+
+.vercel

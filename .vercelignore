@@ -1,0 +1,12 @@
+.git
+.vercel
+.env
+.env.*
+local-preview.png
+mobile-preview.png
+production-preview.png
+README.md
+PRESENTATION_NOTES.md
+PRODUCTION_LOG.md
+PUBLICATION_CHECKLIST.md
+package.json
