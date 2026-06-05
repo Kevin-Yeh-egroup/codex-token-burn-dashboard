@@ -20,13 +20,14 @@
 - [x] Desktop bright-theme screenshot rendered.
 - [x] Mobile bright-theme screenshot rendered at 430px width.
 - [x] GitHub repo created or updated.
-- [ ] Vercel Production deployment is READY.
-- [ ] Root URL returns 200.
-- [ ] `X-Robots-Tag` header verified.
-- [ ] `robots.txt` verified.
+- [x] Vercel Production deployment is READY.
+- [x] Root URL returns 200.
+- [x] `X-Robots-Tag` header verified.
+- [x] `robots.txt` verified.
+- [x] Non-site files are excluded from Vercel deployment.
 
 ## Current External Blocker
 
-- Vercel connector can list projects but does not deploy from this local folder.
-- `npx vercel@latest deploy --prod --yes` failed because the available token was rejected by Vercel.
-- Vercel Production can resume after a valid Vercel CLI login/token is available.
+- Earlier CLI attempts failed only when passing the Codex token file.
+- Deploy succeeded after using the existing local Vercel CLI login with no explicit token.
+- Stable URL: `https://codex-token-burn-dashboard.vercel.app/`

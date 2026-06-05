@@ -24,3 +24,5 @@ See `PRESENTATION_NOTES.md` for the agent discussion summary, reader framing, an
 
 - Public Vercel Production deployment is approved by Kevin in the 2026-06-05 Codex token thread.
 - Review-stage indexing controls stay enabled through meta robots, `robots.txt`, and `X-Robots-Tag`.
+- Production URL: `https://codex-token-burn-dashboard.vercel.app/`
+- GitHub repo: `https://github.com/Kevin-Yeh-egroup/codex-token-burn-dashboard`
