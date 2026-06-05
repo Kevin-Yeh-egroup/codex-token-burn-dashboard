@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Codex Token Burn Dashboard</title>
+  <style>
+    :root {
+      --ink: #f8f3d7;
+      --muted: rgba(248, 243, 215, 0.74);
+      --panel: #111417;
+      --panel-soft: #191f24;
+      --grid: rgba(255, 255, 255, 0.12);
+      --yellow: #ffe36d;
+      --cyan: #55d7d7;
+      --violet: #8854f2;
+      --green: #20c997;
+      --blue: #7aa8ff;
+      --rose: #f09ab1;
+      --orange: #ffb45c;
+      --line: rgba(255, 255, 255, 0.18);
+      font-family: Inter, "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        linear-gradient(126deg, #8a50f4 0%, #6d7aea 42%, #55d4d7 100%);
+    }
+
+    main {
+      width: min(1180px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    .hero {
+      min-height: 310px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 22px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--yellow);
+      font-size: clamp(30px, 5vw, 68px);
+      font-weight: 900;
+      line-height: 1.05;
+      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    .hero h1 {
+      margin: 0;
+      color: var(--yellow);
+      font-size: clamp(44px, 8vw, 104px);
+      font-weight: 950;
+      line-height: 1.02;
+      letter-spacing: 0;
+      text-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    .hero-subtitle {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 800px;
+    }
+
+    .shell {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 22px 60px rgba(23, 15, 47, 0.34);
+      padding: 18px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .panel-title p {
+      margin: 4px 0 0;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 13px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .control {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.78);
+      background: #101316;
+      height: 30px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      min-height: 92px;
+      background: var(--panel-soft);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px;
+      display: grid;
+      align-content: space-between;
+      border-radius: 8px;
+    }
+
+    .metric span {
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 12px;
+    }
+
+    .metric strong {
+      color: #fff;
+      font-size: clamp(23px, 2.6vw, 34px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .metric small {
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 11px;
+    }
+
+    .chart-wrap {
+      min-height: 360px;
+      position: relative;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 12px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .axis,
+    .tick {
+      stroke: var(--grid);
+      stroke-width: 1;
+    }
+
+    .label {
+      fill: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px 18px;
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .swatch {
+      width: 18px;
+      height: 4px;
+      flex: 0 0 auto;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .mini-panel {
+      background: rgba(17, 20, 23, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 18px;
+      border-radius: 8px;
+      min-height: 286px;
+    }
+
+    .mini-panel h3 {
+      margin: 0 0 4px;
+      font-size: 17px;
+    }
+
+    .mini-panel p {
+      margin: 0 0 16px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .bars {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 112px 1fr 88px;
+      gap: 12px;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 12px;
+    }
+
+    .bar-track {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .table th,
+    .table td {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: right;
+      color: rgba(255, 255, 255, 0.74);
+    }
+
+    .table th:first-child,
+    .table td:first-child {
+      text-align: left;
+    }
+
+    .table th {
+      color: rgba(255, 255, 255, 0.48);
+      font-weight: 600;
+    }
+
+    .note {
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 860px) {
+      main {
+        width: min(100vw - 24px, 720px);
+        padding-top: 18px;
+      }
+
+      .hero {
+        min-height: 280px;
+      }
+
+      .panel-header,
+      .section-grid {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      .controls {
+        justify-content: start;
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .legend {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .metric-grid,
+      .legend {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 84px 1fr 72px;
+      }
+
+      .shell,
+      .mini-panel {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" aria-label="Token burn headline">
+      <p class="eyebrow">6月，目前個人燃燒了</p>
+      <h1>22.4億 Tokens</h1>
+      <p class="hero-subtitle">Fresh Tokens 1.55億，快取率 93.5%。資料來源為本機 Codex session token_count 事件，截至 2026-06-05 17:00 Asia/Taipei。</p>
+    </section>
+
+    <section class="shell" aria-label="Token usage dashboard">
+      <div class="panel-header">
+        <div class="panel-title">
+          <h2>Your Token Burn</h2>
+          <p>Cumulative token usage across this reporting period</p>
+        </div>
+        <div class="controls" aria-label="Dashboard dimensions">
+          <span class="control">Group By: Day</span>
+          <span class="control">Metric: Raw Tokens</span>
+        </div>
+      </div>
+
+      <div class="metric-grid" aria-label="June summary metrics">
+        <div class="metric">
+          <span>Raw total</span>
+          <strong>22.4億</strong>
+          <small>全部輸入、快取、輸出合計</small>
+        </div>
+        <div class="metric">
+          <span>Fresh tokens</span>
+          <strong>1.55億</strong>
+          <small>未快取輸入 + 輸出</small>
+        </div>
+        <div class="metric">
+          <span>Cache share</span>
+          <strong>93.5%</strong>
+          <small>長上下文大多被快取承接</small>
+        </div>
+        <div class="metric">
+          <span>Sessions</span>
+          <strong>124</strong>
+          <small>2026-06-01 到 2026-06-05</small>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <svg id="tokenChart" viewBox="0 0 1040 380" role="img" aria-label="Daily cumulative token usage chart"></svg>
+      </div>
+
+      <div class="legend" aria-label="Chart legend">
+        <div class="legend-item"><span class="swatch" style="background: var(--green)"></span>Raw cumulative tokens</div>
+        <div class="legend-item"><span class="swatch" style="background: var(--blue)"></span>Fresh cumulative tokens</div>
+        <div class="legend-item"><span class="swatch" style="background: var(--rose)"></span>Output cumulative tokens</div>
+      </div>
+    </section>
+
+    <section class="section-grid" aria-label="Comparisons">
+      <div class="mini-panel">
+        <h3>Work Mix</h3>
+        <p>公開版只保留聚合後的工作類型，不揭露本機路徑或個別任務內容。</p>
+        <div class="bars" id="workMix"></div>
+      </div>
+
+      <div class="mini-panel">
+        <h3>Weekly Comparison</h3>
+        <p>週期採台灣時間，週日到週六。2026-05-31 週仍是 week-to-date。</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Raw</th>
+              <th>Fresh</th>
+              <th>Cache</th>
+            </tr>
+          </thead>
+          <tbody id="weeklyRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="note">USD 欄位目前先不顯示，因為 Codex/ChatGPT 訂閱使用量與 API billing spend 不是同一口徑。若之後接入實際帳單，可新增 Spend 視圖。</p>
+  </main>
+
+  <script>
+    const daily = [
+      { date: "Jun 1", raw: 261788366, fresh: 16234574, output: 1173442 },
+      { date: "Jun 2", raw: 512839835, fresh: 30758171, output: 2651284 },
+      { date: "Jun 3", raw: 307726153, fresh: 17804617, output: 1507450 },
+      { date: "Jun 4", raw: 243876610, fresh: 14045698, output: 1237381 },
+      { date: "Jun 5", raw: 914606163, fresh: 75860179, output: 3699216 }
+    ];
+
+    const workMix = [
+      { label: "Agent workflows", raw: 664656938, fresh: 37292586 },
+      { label: "Documents", raw: 751705680, fresh: 38667344 },
+      { label: "FamilyFin", raw: 32525644, fresh: 3098188 },
+      { label: "General", raw: 637730889, fresh: 63024457 },
+      { label: "Gmail", raw: 21386878, fresh: 2461694 },
+      { label: "Reports", raw: 132831098, fresh: 10158970 }
+    ];
+
+    const weekly = [
+      { week: "May 10", raw: 4005945, fresh: 723897, cache: "83.3%" },
+      { week: "May 17", raw: 493783705, fresh: 32391193, cache: "94.0%" },
+      { week: "May 24", raw: 909423483, fresh: 56439803, cache: "94.2%" },
+      { week: "May 31", raw: 2363402942, fresh: 160034366, cache: "93.7%" }
+    ];
+
+    function formatToken(value) {
+      if (value >= 100000000) return `${(value / 100000000).toFixed(value >= 1000000000 ? 1 : 2)}億`;
+      if (value >= 10000) return `${Math.round(value / 10000).toLocaleString()}萬`;
+      return value.toLocaleString();
+    }
+
+    function cumulative(items, key) {
+      let running = 0;
+      return items.map((item) => {
+        running += item[key];
+        return { date: item.date, value: running };
+      });
+    }
+
+    function drawChart() {
+      const svg = document.getElementById("tokenChart");
+      const width = 1040;
+      const height = 380;
+      const pad = { left: 72, right: 34, top: 24, bottom: 62 };
+      const plotWidth = width - pad.left - pad.right;
+      const plotHeight = height - pad.top - pad.bottom;
+      const raw = cumulative(daily, "raw");
+      const fresh = cumulative(daily, "fresh");
+      const output = cumulative(daily, "output");
+      const max = Math.max(...raw.map((point) => point.value)) * 1.08;
+      const x = (index) => pad.left + (index / (daily.length - 1)) * plotWidth;
+      const y = (value) => pad.top + plotHeight - (value / max) * plotHeight;
+      const line = (series) => series.map((point, index) => `${index === 0 ? "M" : "L"}${x(index)},${y(point.value)}`).join(" ");
+      const area = (series) => `${line(series)} L${x(series.length - 1)},${pad.top + plotHeight} L${x(0)},${pad.top + plotHeight} Z`;
+      const ticks = [0, 0.25, 0.5, 0.75, 1];
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="rawFill" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#20c997" stop-opacity="0.48"></stop>
+            <stop offset="100%" stop-color="#20c997" stop-opacity="0.08"></stop>
+          </linearGradient>
+          <linearGradient id="freshFill" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#7aa8ff" stop-opacity="0.42"></stop>
+            <stop offset="100%" stop-color="#7aa8ff" stop-opacity="0.05"></stop>
+          </linearGradient>
+        </defs>
+        ${ticks.map((tick) => {
+          const yy = pad.top + plotHeight - tick * plotHeight;
+          return `<line class="tick" x1="${pad.left}" x2="${width - pad.right}" y1="${yy}" y2="${yy}"></line>
+                  <text class="label" x="${pad.left - 14}" y="${yy + 4}" text-anchor="end">${formatToken(max * tick)}</text>`;
+        }).join("")}
+        <path d="${area(raw)}" fill="url(#rawFill)"></path>
+        <path d="${area(fresh)}" fill="url(#freshFill)"></path>
+        <path d="${line(raw)}" fill="none" stroke="#20c997" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"></path>
+        <path d="${line(fresh)}" fill="none" stroke="#7aa8ff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
+        <path d="${line(output)}" fill="none" stroke="#f09ab1" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
+        ${daily.map((item, index) => `<text class="label" x="${x(index)}" y="${height - 24}" text-anchor="middle">${item.date}</text>`).join("")}
+      `;
+    }
+
+    function drawBars() {
+      const container = document.getElementById("workMix");
+      const max = Math.max(...workMix.map((item) => item.raw));
+      container.innerHTML = workMix
+        .sort((a, b) => b.raw - a.raw)
+        .map((item) => `
+          <div class="bar-row">
+            <span>${item.label}</span>
+            <span class="bar-track"><span class="bar-fill" style="width: ${(item.raw / max) * 100}%"></span></span>
+            <span>${formatToken(item.raw)}</span>
+          </div>
+        `)
+        .join("");
+    }
+
+    function drawWeeklyRows() {
+      document.getElementById("weeklyRows").innerHTML = weekly
+        .map((item) => `
+          <tr>
+            <td>${item.week}</td>
+            <td>${formatToken(item.raw)}</td>
+            <td>${formatToken(item.fresh)}</td>
+            <td>${item.cache}</td>
+          </tr>
+        `)
+        .join("");
+    }
+
+    drawChart();
+    drawBars();
+    drawWeeklyRows();
+  </script>
+</body>
+</html>

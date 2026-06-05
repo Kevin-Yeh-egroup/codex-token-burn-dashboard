@@ -1,0 +1,9 @@
+{
+  "name": "codex-token-burn-dashboard",
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "start": "npx serve .",
+    "check": "node -e \"const fs=require('fs'); const html=fs.readFileSync('index.html','utf8'); if(!html.includes('noindex,nofollow,noarchive')) process.exit(1); JSON.parse(fs.readFileSync('vercel.json','utf8')); console.log('static checks passed')\""
+  }
+}
