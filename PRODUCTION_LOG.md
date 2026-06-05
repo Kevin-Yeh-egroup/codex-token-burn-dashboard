@@ -35,3 +35,10 @@
 - Noindex verification: root returned `X-Robots-Tag: noindex, nofollow, noarchive`
 - Robots verification: `/robots.txt` returned `User-agent: *` and `Disallow: /`
 - Deployment-scope verification: preview images and markdown notes returned `404`
+
+## 2026-06-05 Feature Follow-Up
+
+- Added distinct colors to work-type distribution bars.
+- Clarified weekly comparison as per-week usage, not cumulative usage.
+- Implemented the three extension ideas: work report, equivalent-value view, and health reminders.
+- Local verification: `npm run check` passed; desktop and 430px mobile screenshots rendered.

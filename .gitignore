@@ -3,8 +3,6 @@ node_modules/
 .env
 .env.*
 dist/
-local-preview.png
-mobile-preview.png
-production-preview.png
+*preview.png
 
 .vercel

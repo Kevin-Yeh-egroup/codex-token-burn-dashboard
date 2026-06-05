@@ -29,10 +29,14 @@ Avoid presenting USD unless there is an actual billing source or a clearly state
 - Use friendly phrases such as "工作能量紀錄" instead of billing or engineering language.
 - Make mobile reading comfortable: large body text, natural Chinese wrapping, and short paragraph blocks.
 
-## Extension Ideas
+## Implemented Extension Areas
 
-- Weekly work-energy report: token usage plus completed deliverables.
-- Value comparison: tokens per report, tokens per public page, tokens per fixed workflow.
-- Health signal: flag days with high token use but low visible output.
+- Weekly work-energy report: token usage plus completed deliverables, shown as "這些用量換到了什麼".
+- Value comparison: currently uses equivalent work metrics instead of USD, including Fresh Tokens per session, cache multiplier, and output volume.
+- Health signal: flags concentrated high-usage days and explains what should be checked.
 - Billing view: add USD only after real billing data is connected.
 - Automation candidate: later generate a weekly snapshot automatically, after the manual dashboard is useful for at least a few runs.
+
+## Clarification Added
+
+The weekly comparison table should use "當週用量" and "當週新增" instead of generic "整體" or "新增", because the values are per-week usage, not cumulative totals.

@@ -2,9 +2,7 @@
 .vercel
 .env
 .env.*
-local-preview.png
-mobile-preview.png
-production-preview.png
+*preview.png
 README.md
 PRESENTATION_NOTES.md
 PRODUCTION_LOG.md

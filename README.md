@@ -20,6 +20,14 @@ Public, noindex static dashboard for Kevin's aggregate Codex token usage.
 
 See `PRESENTATION_NOTES.md` for the agent discussion summary, reader framing, and extension ideas.
 
+## Current Feature Set
+
+- Colored work-type distribution bars.
+- Weekly comparison labeled as per-week usage, not cumulative usage.
+- Work-report section connecting token use to visible outcomes.
+- Equivalent-value section that avoids unverified USD spend.
+- Health-reminder section for high-usage / low-output review.
+
 ## Publish Posture
 
 - Public Vercel Production deployment is approved by Kevin in the 2026-06-05 Codex token thread.

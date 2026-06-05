@@ -25,6 +25,10 @@
 - [x] `X-Robots-Tag` header verified.
 - [x] `robots.txt` verified.
 - [x] Non-site files are excluded from Vercel deployment.
+- [x] Work-type bars use distinct colors.
+- [x] Weekly comparison clarifies per-week usage.
+- [x] Work-report, value, and health-reminder sections are implemented.
+- [x] Mobile table labels verified at 430px.
 
 ## Current External Blocker
 

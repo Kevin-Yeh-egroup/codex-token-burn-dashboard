@@ -265,8 +265,8 @@
     }
 
     .bar-track {
-      height: 14px;
-      background: #e7f1ec;
+      height: 16px;
+      background: #edf4f1;
       border-radius: 999px;
       overflow: hidden;
       border: 1px solid #d5e5dd;
@@ -275,7 +275,23 @@
     .bar-fill {
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--leaf), var(--accent));
+      background: var(--accent);
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+      opacity: 0.92;
+    }
+
+    .bar-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .category-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      flex: 0 0 auto;
     }
 
     .table {
@@ -301,6 +317,10 @@
     .table th {
       color: #788d88;
       font-weight: 700;
+    }
+
+    .mobile-label {
+      display: none;
     }
 
     .extension-list {
@@ -340,6 +360,91 @@
       line-height: 1.75;
     }
 
+    .wide-section {
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      border-radius: 8px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .outcome-grid,
+    .value-grid,
+    .health-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .outcome-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .value-grid,
+    .health-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .info-card .value-grid,
+    .info-card .health-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .outcome,
+    .value-card,
+    .health-card {
+      min-height: 150px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .outcome span,
+    .value-card span,
+    .health-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .outcome strong,
+    .value-card strong,
+    .health-card strong {
+      color: #243735;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .outcome p,
+    .value-card p,
+    .health-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.68;
+    }
+
+    .health-card[data-level="watch"] {
+      background: #fff7de;
+      border-color: #f5d982;
+    }
+
+    .health-card[data-level="good"] {
+      background: #ecfbf4;
+      border-color: #b7ead5;
+    }
+
+    .health-card[data-level="rule"] {
+      background: #eef7ff;
+      border-color: #c6e3ff;
+    }
+
     @media (max-width: 860px) {
       main {
         width: min(100vw - 24px, 720px);
@@ -356,7 +461,10 @@
 
       .section-header,
       .section-grid,
-      .extension-list {
+      .extension-list,
+      .outcome-grid,
+      .value-grid,
+      .health-grid {
         grid-template-columns: 1fr;
         display: grid;
       }
@@ -387,6 +495,24 @@
       .chart-card,
       .info-card {
         padding: 16px;
+      }
+
+      .table {
+        font-size: 12px;
+        table-layout: fixed;
+      }
+
+      .table th,
+      .table td {
+        padding: 10px 3px;
+      }
+
+      .desktop-label {
+        display: none;
+      }
+
+      .mobile-label {
+        display: inline;
       }
     }
   </style>
@@ -458,13 +584,13 @@
 
       <div class="info-card">
         <h3>每週比較</h3>
-        <p>週期採台灣時間，週日到週六。最後一週還沒結束，所以先當作本週進度。</p>
+        <p>這裡的「當週用量」是每一週自己的使用量，不是從第一週一路累積到現在。週期採台灣時間，週日到週六。</p>
         <table class="table">
           <thead>
             <tr>
               <th>週起始</th>
-              <th>整體</th>
-              <th>新增</th>
+              <th><span class="desktop-label">當週用量</span><span class="mobile-label">用量</span></th>
+              <th><span class="desktop-label">當週新增</span><span class="mobile-label">新增</span></th>
               <th>快取</th>
             </tr>
           </thead>
@@ -473,18 +599,78 @@
       </div>
     </section>
 
-    <section class="extension-list" aria-label="Extension ideas">
-      <div class="extension">
-        <h3>變成工作週報</h3>
-        <p>把 token 和本週完成的報表、修復、發布、決策放在一起，回答「這些用量換到了什麼」。</p>
+    <section class="wide-section" aria-label="Weekly work report">
+      <div class="section-title">
+        <h2>這些用量換到了什麼</h2>
+        <p>這是工作週報版的第一步：先用公開安全的成果分類，把 token 用量和看得見的產出放在同一張圖裡。</p>
       </div>
-      <div class="extension">
-        <h3>加入價值換算</h3>
-        <p>若之後接到實際帳單，可以新增美元視圖；若沒有帳單，就用「等效工作量」避免誤導。</p>
+      <div class="outcome-grid">
+        <article class="outcome">
+          <span>報表與視覺化</span>
+          <strong>Token 儀表板</strong>
+          <p>把原本散在 session 紀錄裡的 token 用量整理成可閱讀、可比較的畫面。</p>
+        </article>
+        <article class="outcome">
+          <span>發布與版本</span>
+          <strong>Production 網站</strong>
+          <p>建立 GitHub repo 並接上 Vercel Production，後續更新會有版本紀錄。</p>
+        </article>
+        <article class="outcome">
+          <span>流程修復</span>
+          <strong>部署白名單</strong>
+          <p>只把真正網站檔部署出去，截圖、紀錄與說明文件留在 repo 裡。</p>
+        </article>
+        <article class="outcome">
+          <span>決策紀錄</span>
+          <strong>不硬算美元</strong>
+          <p>沒有實際帳單前，先用等效工作量，避免把訂閱制用量誤說成花費。</p>
+        </article>
       </div>
-      <div class="extension">
-        <h3>設定健康提醒</h3>
-        <p>當某天用量暴增但產出很少，就提醒回頭檢查流程是不是卡住或重複跑太多次。</p>
+    </section>
+
+    <section class="section-grid" aria-label="Value and health extensions">
+      <div class="info-card">
+        <h3>價值換算</h3>
+        <p>目前先用「等效工作量」來看價值。等接到實際帳單後，再新增美元視圖。</p>
+        <div class="value-grid">
+          <article class="value-card">
+            <span>每個工作回合</span>
+            <strong>約 125萬 Fresh Tokens</strong>
+            <p>代表平均每次工作新增投入的 AI 處理量。</p>
+          </article>
+          <article class="value-card">
+            <span>快取放大效果</span>
+            <strong>約 14.5 倍</strong>
+            <p>Raw total 比 Fresh Tokens 大很多，主因是長上下文被重複承接。</p>
+          </article>
+          <article class="value-card">
+            <span>輸出內容量</span>
+            <strong>1,049萬 Tokens</strong>
+            <p>這是 Codex 真正回寫、整理、說明與產出的文字量。</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>健康提醒</h3>
+        <p>健康提醒不是要少用，而是避免「用很多但沒有換到成果」。目前先用簡單規則標記。</p>
+        <div class="health-grid">
+          <article class="health-card" data-level="watch">
+            <span>需要回看</span>
+            <strong>6/5 用量集中</strong>
+            <p>當日用量高於本月日均約 2 倍，應對照是否有明確產出。</p>
+          </article>
+          <article class="health-card" data-level="good">
+            <span>狀態良好</span>
+            <strong>快取率 93.5%</strong>
+            <p>代表共享規則與長對話大多被系統承接，沒有全部重算。</p>
+          </article>
+          <article class="health-card" data-level="rule">
+            <span>提醒規則</span>
+            <strong>高用量 + 低成果</strong>
+            <p>若某天暴增但沒有完成項目，下一版會自動標成需要檢查。</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -501,12 +687,12 @@
     ];
 
     const workMix = [
-      { label: "Agent 工作流", raw: 664656938, fresh: 37292586 },
-      { label: "文件處理", raw: 751705680, fresh: 38667344 },
-      { label: "FamilyFin", raw: 32525644, fresh: 3098188 },
-      { label: "一般協作", raw: 637730889, fresh: 63024457 },
-      { label: "Gmail", raw: 21386878, fresh: 2461694 },
-      { label: "報表", raw: 132831098, fresh: 10158970 }
+      { label: "Agent 工作流", raw: 664656938, fresh: 37292586, color: "#1aa6a8" },
+      { label: "文件處理", raw: 751705680, fresh: 38667344, color: "#5b8def" },
+      { label: "FamilyFin", raw: 32525644, fresh: 3098188, color: "#57bf8e" },
+      { label: "一般協作", raw: 637730889, fresh: 63024457, color: "#df9d28" },
+      { label: "Gmail", raw: 21386878, fresh: 2461694, color: "#e78ea5" },
+      { label: "報表", raw: 132831098, fresh: 10158970, color: "#7e75d8" }
     ];
 
     const weekly = [
@@ -579,8 +765,8 @@
         .sort((a, b) => b.raw - a.raw)
         .map((item) => `
           <div class="bar-row">
-            <span>${item.label}</span>
-            <span class="bar-track"><span class="bar-fill" style="width: ${(item.raw / max) * 100}%"></span></span>
+            <span class="bar-label"><span class="category-dot" style="background: ${item.color}"></span>${item.label}</span>
+            <span class="bar-track"><span class="bar-fill" style="width: ${(item.raw / max) * 100}%; background: ${item.color}"></span></span>
             <span>${formatToken(item.raw)}</span>
           </div>
         `)
