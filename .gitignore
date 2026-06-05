@@ -4,3 +4,4 @@ node_modules/
 .env.*
 dist/
 local-preview.png
+mobile-preview.png

@@ -17,6 +17,8 @@
 ## Verification
 
 - [x] Local visual check.
+- [x] Desktop bright-theme screenshot rendered.
+- [x] Mobile bright-theme screenshot rendered at 430px width.
 - [x] GitHub repo created or updated.
 - [ ] Vercel Production deployment is READY.
 - [ ] Root URL returns 200.

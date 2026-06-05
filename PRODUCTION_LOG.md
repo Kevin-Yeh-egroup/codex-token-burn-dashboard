@@ -16,3 +16,9 @@
 - Vercel attempt 2: CLI deploy without scope failed because token was invalid
 - Vercel API check: `/v2/user` returned 403 with the available token
 - Verification status: Vercel Production deployment blocked by missing valid Vercel deploy authentication
+
+## 2026-06-05 Bright Theme Revision
+
+- Updated presentation to a brighter, softer palette for non-technical readers.
+- Added `PRESENTATION_NOTES.md` with simulated agent discussion and extension ideas.
+- Local verification: `npm run check` passed; Chrome headless rendered desktop and 430px mobile previews.

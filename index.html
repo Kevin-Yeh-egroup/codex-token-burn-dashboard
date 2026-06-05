@@ -7,19 +7,22 @@
   <title>Codex Token Burn Dashboard</title>
   <style>
     :root {
-      --ink: #f8f3d7;
-      --muted: rgba(248, 243, 215, 0.74);
-      --panel: #111417;
-      --panel-soft: #191f24;
-      --grid: rgba(255, 255, 255, 0.12);
-      --yellow: #ffe36d;
-      --cyan: #55d7d7;
-      --violet: #8854f2;
-      --green: #20c997;
-      --blue: #7aa8ff;
-      --rose: #f09ab1;
-      --orange: #ffb45c;
-      --line: rgba(255, 255, 255, 0.18);
+      --bg: #f8fbf7;
+      --paper: #ffffff;
+      --paper-soft: #f1f7f2;
+      --ink: #22302f;
+      --muted: #62736f;
+      --soft-line: #d9e7df;
+      --accent: #1aa6a8;
+      --accent-deep: #10777b;
+      --mint: #dff5ed;
+      --sun: #ffe48a;
+      --sun-deep: #df9d28;
+      --sky: #dff0ff;
+      --blue: #5b8def;
+      --leaf: #57bf8e;
+      --rose: #e78ea5;
+      --shadow: 0 22px 60px rgba(69, 101, 92, 0.14);
       font-family: Inter, "Segoe UI", "Noto Sans TC", Arial, sans-serif;
     }
 
@@ -32,59 +35,124 @@
       color: var(--ink);
       min-height: 100vh;
       background:
-        linear-gradient(126deg, #8a50f4 0%, #6d7aea 42%, #55d4d7 100%);
+        linear-gradient(145deg, rgba(255, 228, 138, 0.52), rgba(223, 245, 237, 0.82) 44%, rgba(223, 240, 255, 0.94)),
+        var(--bg);
     }
 
     main {
-      width: min(1180px, calc(100vw - 40px));
+      width: min(1160px, calc(100vw - 40px));
       margin: 0 auto;
-      padding: 28px 0 44px;
+      padding: 30px 0 48px;
     }
 
     .hero {
-      min-height: 310px;
+      min-height: 330px;
       display: grid;
       align-content: center;
-      justify-items: center;
-      gap: 22px;
-      text-align: center;
+      gap: 20px;
     }
 
-    .eyebrow {
+    .kicker {
       margin: 0;
-      color: var(--yellow);
-      font-size: clamp(30px, 5vw, 68px);
+      color: var(--accent-deep);
+      font-size: clamp(24px, 4vw, 48px);
       font-weight: 900;
-      line-height: 1.05;
-      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+      line-height: 1.18;
+      letter-spacing: 0;
     }
 
     .hero h1 {
       margin: 0;
-      color: var(--yellow);
-      font-size: clamp(44px, 8vw, 104px);
+      color: #2a4c48;
+      font-size: clamp(46px, 8vw, 102px);
       font-weight: 950;
-      line-height: 1.02;
+      line-height: 0.98;
       letter-spacing: 0;
-      text-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
     }
 
-    .hero-subtitle {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.86);
-      font-size: 15px;
-      line-height: 1.7;
-      max-width: 800px;
+    .hero strong {
+      color: var(--sun-deep);
     }
 
-    .shell {
-      background: var(--panel);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 22px 60px rgba(23, 15, 47, 0.34);
+    .hero-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 4px 0 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      color: #3d625d;
+      font-size: 14px;
+      line-height: 1.35;
+      box-shadow: 0 8px 24px rgba(80, 122, 116, 0.1);
+    }
+
+    .reader-note {
+      max-width: 760px;
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.78;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      min-height: 122px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
       padding: 18px;
+      display: grid;
+      align-content: space-between;
+      box-shadow: 0 12px 34px rgba(68, 103, 95, 0.1);
     }
 
-    .panel-header {
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .metric strong {
+      color: var(--ink);
+      font-size: clamp(26px, 3vw, 42px);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .metric small {
+      color: #718681;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .chart-card,
+    .info-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .chart-card {
+      padding: 22px 22px 18px;
+    }
+
+    .section-header {
       display: flex;
       justify-content: space-between;
       gap: 18px;
@@ -92,16 +160,21 @@
       margin-bottom: 14px;
     }
 
-    .panel-title h2 {
+    .section-title h2,
+    .info-card h3 {
       margin: 0;
-      font-size: 18px;
-      line-height: 1.25;
+      color: #243735;
+      font-size: 20px;
+      line-height: 1.3;
+      letter-spacing: 0;
     }
 
-    .panel-title p {
-      margin: 4px 0 0;
-      color: rgba(255, 255, 255, 0.68);
-      font-size: 13px;
+    .section-title p,
+    .info-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
     }
 
     .controls {
@@ -112,57 +185,17 @@
     }
 
     .control {
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: rgba(255, 255, 255, 0.78);
-      background: #101316;
-      height: 30px;
-      padding: 0 10px;
+      border: 1px solid var(--soft-line);
+      color: #385650;
+      background: #f8fcfa;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
+      font-size: 13px;
       white-space: nowrap;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .metric {
-      min-height: 92px;
-      background: var(--panel-soft);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 14px;
-      display: grid;
-      align-content: space-between;
-      border-radius: 8px;
-    }
-
-    .metric span {
-      color: rgba(255, 255, 255, 0.68);
-      font-size: 12px;
-    }
-
-    .metric strong {
-      color: #fff;
-      font-size: clamp(23px, 2.6vw, 34px);
-      line-height: 1.15;
-      letter-spacing: 0;
-    }
-
-    .metric small {
-      color: rgba(255, 255, 255, 0.56);
-      font-size: 11px;
-    }
-
-    .chart-wrap {
-      min-height: 360px;
-      position: relative;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 12px;
     }
 
     svg {
@@ -171,24 +204,23 @@
       display: block;
     }
 
-    .axis,
     .tick {
-      stroke: var(--grid);
+      stroke: rgba(85, 111, 105, 0.16);
       stroke-width: 1;
     }
 
     .label {
-      fill: rgba(255, 255, 255, 0.6);
+      fill: #6d807c;
       font-size: 12px;
     }
 
     .legend {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
       margin-top: 12px;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 12px;
+      color: #586d68;
+      font-size: 13px;
     }
 
     .legend-item {
@@ -199,8 +231,9 @@
     }
 
     .swatch {
-      width: 18px;
-      height: 4px;
+      width: 20px;
+      height: 5px;
+      border-radius: 999px;
       flex: 0 0 auto;
     }
 
@@ -211,65 +244,53 @@
       margin-top: 18px;
     }
 
-    .mini-panel {
-      background: rgba(17, 20, 23, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      padding: 18px;
-      border-radius: 8px;
-      min-height: 286px;
-    }
-
-    .mini-panel h3 {
-      margin: 0 0 4px;
-      font-size: 17px;
-    }
-
-    .mini-panel p {
-      margin: 0 0 16px;
-      color: rgba(255, 255, 255, 0.62);
-      font-size: 12px;
-      line-height: 1.55;
+    .info-card {
+      padding: 20px;
+      min-height: 300px;
     }
 
     .bars {
       display: grid;
       gap: 12px;
+      margin-top: 16px;
     }
 
     .bar-row {
       display: grid;
-      grid-template-columns: 112px 1fr 88px;
+      grid-template-columns: 112px 1fr 86px;
       gap: 12px;
       align-items: center;
-      color: rgba(255, 255, 255, 0.78);
-      font-size: 12px;
+      color: #3f5752;
+      font-size: 13px;
     }
 
     .bar-track {
-      height: 12px;
-      background: rgba(255, 255, 255, 0.1);
+      height: 14px;
+      background: #e7f1ec;
       border-radius: 999px;
       overflow: hidden;
+      border: 1px solid #d5e5dd;
     }
 
     .bar-fill {
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--green), var(--cyan));
+      background: linear-gradient(90deg, var(--leaf), var(--accent));
     }
 
     .table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px;
+      margin-top: 12px;
+      font-size: 13px;
     }
 
     .table th,
     .table td {
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 11px 0;
+      border-bottom: 1px solid #e4eee9;
       text-align: right;
-      color: rgba(255, 255, 255, 0.74);
+      color: #3f5752;
     }
 
     .table th:first-child,
@@ -278,15 +299,45 @@
     }
 
     .table th {
-      color: rgba(255, 255, 255, 0.48);
-      font-weight: 600;
+      color: #788d88;
+      font-weight: 700;
     }
 
-    .note {
+    .extension-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .extension {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 150px;
+      box-shadow: 0 12px 30px rgba(70, 104, 98, 0.09);
+    }
+
+    .extension h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.35;
+      color: #263c38;
+    }
+
+    .extension p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.68;
+    }
+
+    .plain-note {
       margin: 18px 0 0;
-      color: rgba(255, 255, 255, 0.68);
-      font-size: 12px;
-      line-height: 1.7;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
     }
 
     @media (max-width: 860px) {
@@ -296,11 +347,16 @@
       }
 
       .hero {
-        min-height: 280px;
+        min-height: 300px;
       }
 
-      .panel-header,
-      .section-grid {
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-header,
+      .section-grid,
+      .extension-list {
         grid-template-columns: 1fr;
         display: grid;
       }
@@ -308,29 +364,29 @@
       .controls {
         justify-content: start;
       }
-
-      .metric-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .legend {
-        grid-template-columns: 1fr 1fr;
-      }
     }
 
     @media (max-width: 540px) {
-      .metric-grid,
-      .legend {
+      main {
+        width: min(100vw - 20px, 420px);
+      }
+
+      .metrics {
         grid-template-columns: 1fr;
       }
 
-      .bar-row {
-        grid-template-columns: 84px 1fr 72px;
+      .hero h1 {
+        font-size: clamp(44px, 17vw, 72px);
       }
 
-      .shell,
-      .mini-panel {
-        padding: 14px;
+      .bar-row {
+        grid-template-columns: 88px 1fr 70px;
+        gap: 8px;
+      }
+
+      .chart-card,
+      .info-card {
+        padding: 16px;
       }
     }
   </style>
@@ -338,74 +394,78 @@
 <body>
   <main>
     <section class="hero" aria-label="Token burn headline">
-      <p class="eyebrow">6月，目前個人燃燒了</p>
-      <h1>22.4億 Tokens</h1>
-      <p class="hero-subtitle">Fresh Tokens 1.55億，快取率 93.5%。資料來源為本機 Codex session token_count 事件，截至 2026-06-05 17:00 Asia/Taipei。</p>
+      <p class="kicker">6月，目前個人燃燒了</p>
+      <h1><strong>22.4億</strong> Tokens</h1>
+      <div class="hero-summary" aria-label="Key summary">
+        <span class="pill">Fresh Tokens 1.55億</span>
+        <span class="pill">快取率 93.5%</span>
+        <span class="pill">124 個工作回合</span>
+        <span class="pill">截至 2026-06-05 17:00</span>
+      </div>
+      <p class="reader-note">這張圖不是帳單，而是「我和 Codex 一起工作的能量紀錄」。Raw Tokens 代表整體處理量，Fresh Tokens 比較像這段期間新投入的有效工作量。</p>
     </section>
 
-    <section class="shell" aria-label="Token usage dashboard">
-      <div class="panel-header">
-        <div class="panel-title">
-          <h2>Your Token Burn</h2>
-          <p>Cumulative token usage across this reporting period</p>
+    <section class="metrics" aria-label="June summary metrics">
+      <div class="metric">
+        <span>整體處理量</span>
+        <strong>22.4億</strong>
+        <small>包含讀取、快取、產出與推理</small>
+      </div>
+      <div class="metric">
+        <span>新增投入量</span>
+        <strong>1.55億</strong>
+        <small>未快取輸入 + 輸出</small>
+      </div>
+      <div class="metric">
+        <span>重複內容節省</span>
+        <strong>93.5%</strong>
+        <small>長對話與共享規則被快取承接</small>
+      </div>
+      <div class="metric">
+        <span>工作回合</span>
+        <strong>124</strong>
+        <small>2026-06-01 到 2026-06-05</small>
+      </div>
+    </section>
+
+    <section class="chart-card" aria-label="Token usage dashboard">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>本月累積曲線</h2>
+          <p>用一天一天累積的方式，看這個月的 Codex 工作量是平穩增加，還是某幾天特別集中。</p>
         </div>
         <div class="controls" aria-label="Dashboard dimensions">
-          <span class="control">Group By: Day</span>
-          <span class="control">Metric: Raw Tokens</span>
+          <span class="control">分組：每日</span>
+          <span class="control">指標：Token</span>
         </div>
       </div>
 
-      <div class="metric-grid" aria-label="June summary metrics">
-        <div class="metric">
-          <span>Raw total</span>
-          <strong>22.4億</strong>
-          <small>全部輸入、快取、輸出合計</small>
-        </div>
-        <div class="metric">
-          <span>Fresh tokens</span>
-          <strong>1.55億</strong>
-          <small>未快取輸入 + 輸出</small>
-        </div>
-        <div class="metric">
-          <span>Cache share</span>
-          <strong>93.5%</strong>
-          <small>長上下文大多被快取承接</small>
-        </div>
-        <div class="metric">
-          <span>Sessions</span>
-          <strong>124</strong>
-          <small>2026-06-01 到 2026-06-05</small>
-        </div>
-      </div>
-
-      <div class="chart-wrap">
-        <svg id="tokenChart" viewBox="0 0 1040 380" role="img" aria-label="Daily cumulative token usage chart"></svg>
-      </div>
+      <svg id="tokenChart" viewBox="0 0 1040 380" role="img" aria-label="Daily cumulative token usage chart"></svg>
 
       <div class="legend" aria-label="Chart legend">
-        <div class="legend-item"><span class="swatch" style="background: var(--green)"></span>Raw cumulative tokens</div>
-        <div class="legend-item"><span class="swatch" style="background: var(--blue)"></span>Fresh cumulative tokens</div>
-        <div class="legend-item"><span class="swatch" style="background: var(--rose)"></span>Output cumulative tokens</div>
+        <div class="legend-item"><span class="swatch" style="background: var(--accent)"></span>整體處理量</div>
+        <div class="legend-item"><span class="swatch" style="background: var(--blue)"></span>新增投入量</div>
+        <div class="legend-item"><span class="swatch" style="background: var(--rose)"></span>輸出文字量</div>
       </div>
     </section>
 
     <section class="section-grid" aria-label="Comparisons">
-      <div class="mini-panel">
-        <h3>Work Mix</h3>
-        <p>公開版只保留聚合後的工作類型，不揭露本機路徑或個別任務內容。</p>
+      <div class="info-card">
+        <h3>工作類型分布</h3>
+        <p>這裡只放大分類，讓你知道 token 大多花在哪些工作上，不揭露個別對話或任務內容。</p>
         <div class="bars" id="workMix"></div>
       </div>
 
-      <div class="mini-panel">
-        <h3>Weekly Comparison</h3>
-        <p>週期採台灣時間，週日到週六。2026-05-31 週仍是 week-to-date。</p>
+      <div class="info-card">
+        <h3>每週比較</h3>
+        <p>週期採台灣時間，週日到週六。最後一週還沒結束，所以先當作本週進度。</p>
         <table class="table">
           <thead>
             <tr>
-              <th>Week</th>
-              <th>Raw</th>
-              <th>Fresh</th>
-              <th>Cache</th>
+              <th>週起始</th>
+              <th>整體</th>
+              <th>新增</th>
+              <th>快取</th>
             </tr>
           </thead>
           <tbody id="weeklyRows"></tbody>
@@ -413,7 +473,22 @@
       </div>
     </section>
 
-    <p class="note">USD 欄位目前先不顯示，因為 Codex/ChatGPT 訂閱使用量與 API billing spend 不是同一口徑。若之後接入實際帳單，可新增 Spend 視圖。</p>
+    <section class="extension-list" aria-label="Extension ideas">
+      <div class="extension">
+        <h3>變成工作週報</h3>
+        <p>把 token 和本週完成的報表、修復、發布、決策放在一起，回答「這些用量換到了什麼」。</p>
+      </div>
+      <div class="extension">
+        <h3>加入價值換算</h3>
+        <p>若之後接到實際帳單，可以新增美元視圖；若沒有帳單，就用「等效工作量」避免誤導。</p>
+      </div>
+      <div class="extension">
+        <h3>設定健康提醒</h3>
+        <p>當某天用量暴增但產出很少，就提醒回頭檢查流程是不是卡住或重複跑太多次。</p>
+      </div>
+    </section>
+
+    <p class="plain-note">公開版只使用聚合數字。Raw Tokens 是整體處理量，不等於實際花費；USD/spend 需要連到實際帳單或先定義清楚換算假設。</p>
   </main>
 
   <script>
@@ -426,19 +501,19 @@
     ];
 
     const workMix = [
-      { label: "Agent workflows", raw: 664656938, fresh: 37292586 },
-      { label: "Documents", raw: 751705680, fresh: 38667344 },
+      { label: "Agent 工作流", raw: 664656938, fresh: 37292586 },
+      { label: "文件處理", raw: 751705680, fresh: 38667344 },
       { label: "FamilyFin", raw: 32525644, fresh: 3098188 },
-      { label: "General", raw: 637730889, fresh: 63024457 },
+      { label: "一般協作", raw: 637730889, fresh: 63024457 },
       { label: "Gmail", raw: 21386878, fresh: 2461694 },
-      { label: "Reports", raw: 132831098, fresh: 10158970 }
+      { label: "報表", raw: 132831098, fresh: 10158970 }
     ];
 
     const weekly = [
-      { week: "May 10", raw: 4005945, fresh: 723897, cache: "83.3%" },
-      { week: "May 17", raw: 493783705, fresh: 32391193, cache: "94.0%" },
-      { week: "May 24", raw: 909423483, fresh: 56439803, cache: "94.2%" },
-      { week: "May 31", raw: 2363402942, fresh: 160034366, cache: "93.7%" }
+      { week: "5/10", raw: 4005945, fresh: 723897, cache: "83.3%" },
+      { week: "5/17", raw: 493783705, fresh: 32391193, cache: "94.0%" },
+      { week: "5/24", raw: 909423483, fresh: 56439803, cache: "94.2%" },
+      { week: "5/31", raw: 2363402942, fresh: 160034366, cache: "93.7%" }
     ];
 
     function formatToken(value) {
@@ -459,7 +534,7 @@
       const svg = document.getElementById("tokenChart");
       const width = 1040;
       const height = 380;
-      const pad = { left: 72, right: 34, top: 24, bottom: 62 };
+      const pad = { left: 74, right: 34, top: 22, bottom: 60 };
       const plotWidth = width - pad.left - pad.right;
       const plotHeight = height - pad.top - pad.bottom;
       const raw = cumulative(daily, "raw");
@@ -475,12 +550,12 @@
       svg.innerHTML = `
         <defs>
           <linearGradient id="rawFill" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stop-color="#20c997" stop-opacity="0.48"></stop>
-            <stop offset="100%" stop-color="#20c997" stop-opacity="0.08"></stop>
+            <stop offset="0%" stop-color="#1aa6a8" stop-opacity="0.28"></stop>
+            <stop offset="100%" stop-color="#1aa6a8" stop-opacity="0.04"></stop>
           </linearGradient>
           <linearGradient id="freshFill" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stop-color="#7aa8ff" stop-opacity="0.42"></stop>
-            <stop offset="100%" stop-color="#7aa8ff" stop-opacity="0.05"></stop>
+            <stop offset="0%" stop-color="#5b8def" stop-opacity="0.22"></stop>
+            <stop offset="100%" stop-color="#5b8def" stop-opacity="0.03"></stop>
           </linearGradient>
         </defs>
         ${ticks.map((tick) => {
@@ -490,9 +565,9 @@
         }).join("")}
         <path d="${area(raw)}" fill="url(#rawFill)"></path>
         <path d="${area(fresh)}" fill="url(#freshFill)"></path>
-        <path d="${line(raw)}" fill="none" stroke="#20c997" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"></path>
-        <path d="${line(fresh)}" fill="none" stroke="#7aa8ff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
-        <path d="${line(output)}" fill="none" stroke="#f09ab1" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
+        <path d="${line(raw)}" fill="none" stroke="#1aa6a8" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"></path>
+        <path d="${line(fresh)}" fill="none" stroke="#5b8def" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
+        <path d="${line(output)}" fill="none" stroke="#e78ea5" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
         ${daily.map((item, index) => `<text class="label" x="${x(index)}" y="${height - 24}" text-anchor="middle">${item.date}</text>`).join("")}
       `;
     }
